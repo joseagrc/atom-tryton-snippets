@@ -1,0 +1,285 @@
+'.text.xml':
+
+
+  'Tryton: Help':
+    'prefix': 'tryton_help'
+    'body': """
+        <!--
+        tryton_view_form: Tryton: Form View
+        tryton_record_list: Tryton: Record for List View
+        tryton_record_inform: Tryton: Record for Inherited Form View
+        tryton_header: Tryton: modules file header
+        tryton_rfield: Tryton: Record Field Tag
+        tryton_rfield: Tryton: Record Field Tag eval
+        tryton_rfield: Tryton: Record Field Tag ref
+        tryton_vfield: Tryton: View Field Tag with separator
+        tryton_view_header: Tryton: views file header
+        tryton_record_form: Tryton: Record for Form View
+        tryton_record_button: Tryton: Record for button
+        tryton_act_formview: Tryton: Action Window List View record
+        tryton_view_tree: Tryton: Tree View
+        tryton_completeview: Tryton: Complete view
+        tryton_view_inform: Tryton: Inherited Form View
+        tryton_vlabel: Tryton: View Label Tag
+        tryton_help: Tryton: Help
+        tryton_vfield: Tryton: View Field Tag
+        tryton_vfield: Tryton: View Field Tag with label
+        tryton_record_inlist: Tryton: Record for Inherited List View
+        tryton_vfield: Tryton: View Field Tag for One2Many
+        tryton_record_data: Tryton: Record for data
+        tryton_record_tree: Tryton: Record for Tree View
+        tryton_vbutton: Tryton: Button
+        tryton_view_intree: Tryton: Inherited Tree View
+        tryton_act_window: Tryton: Action Window record
+        -->
+    """
+
+# common
+
+  'Tryton: modules file header':
+    'prefix': 'tryton_header'
+    'body': '''
+        <?xml version="1.0"?>
+        <!-- The COPYRIGHT file at the top level of this repository contains the full
+             copyright notices and license terms. -->
+        <tryton>
+            <data>
+                ${1}
+            </data>
+        </tryton>
+    '''
+
+  'Tryton: views file header':
+    'prefix': 'tryton_view_header'
+    'body': '''
+        <?xml version="1.0"?>
+        <!-- The COPYRIGHT file at the top level of this repository contains the full
+             copyright notices and license terms. -->
+        ${1}
+    '''
+
+# records
+
+  'Tryton: Record for Tree View':
+    'prefix': 'tryton_record_tree'
+    'body': '''
+        <record model="ir.ui.view" id="${1:model_id}_view_tree">
+            <field name="model">${2:model.name}</field>
+            <field name="type">tree</field>
+            <field name="field_childs">${3:childs}</field>
+            <field name="name">$1_list</field>
+        </record>
+    '''
+
+  'Tryton: Record for List View':
+    'prefix': 'tryton_record_list'
+    'body': '''
+        <record model="ir.ui.view" id="${1:model_id}_view_list">
+            <field name="model">${2:model.name}</field>
+            <field name="type">tree</field>
+            <field name="name">$1_list</field>
+        </record>
+    '''
+
+  'Tryton: Record for data':
+    'prefix': 'tryton_record_data'
+    'body': '''
+        <record model="${1:model.name}" id="${2:model_name_record_id}">
+            ${3:fields}
+        </record>
+    '''
+
+  'Tryton: Record for Inherited Form View':
+    'prefix': 'tryton_record_inform'
+    'body': '''
+        <record model="ir.ui.view" id="${1:model_id}_view_form">
+            <field name="model">${2:model.name}</field>
+            <field name="inherit" ref="${3:inherit_model}.${4:$1_view_form}"/>
+            <field name="name">$1_form</field>
+        </record>
+    '''
+
+  'Tryton: Action Window record':
+    'prefix': 'tryton_act_window'
+    'body': '''
+        <record model="ir.action.act_window" id="act_${1:model_id}">
+            <field name="name">${2:plural_title}</field>
+            <field name="res_model">${3:model_name}</field>
+            <field name="search_value"></field>
+            <field name="domain"></field>
+            <field name="context"></field>
+        </record>
+    '''
+
+  'Tryton: Complete view':
+    'prefix': 'tryton_completeview'
+    'body': '''
+        <record model="ir.ui.view" id="${1:model_id}_form_view">
+            <field name="model">${2:model_name}</field>
+            <field name="type">form</field>
+            <field name="name">$1_form</field>
+        </record>
+
+        <record model="ir.ui.view" id="$1_list_view">
+            <field name="model">$2</field>
+            <field name="type">tree</field>
+            <field name="name">$1_list</field>
+        </record>
+
+        <record model="ir.action.act_window" id="act_$1">
+            <field name="name">${3:plural_title}</field>
+            <field name="res_model">$2</field>
+            <field name="search_value"></field>
+            <field name="domain"></field>
+            <field name="context"></field>
+        </record>
+
+        <record model="ir.action.act_window.view" id="act_$1_view1">
+            <field name="sequence" eval="10"plural_title/>
+            <field name="view" ref="$1_list_view"/>
+            <field name="act_window" ref="act_$1"/>
+        </record>
+
+        <record model="ir.action.act_window.view" id="act_$1_view2">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="$1_form_view"/>
+            <field name="act_window" ref="act_$1"/>
+        </record>
+    '''
+
+  'Tryton: Record Field Tag eval':
+    'prefix': 'tryton_rfield'
+    'body': '<field name="${1:fieldname}" eval="${2:value}"/>'
+
+  'Tryton: Action Window List View record':
+    'prefix': 'tryton_act_listview'
+    'body': '''
+        <record model="ir.action.act_window.view" id="act_${1:model_id}_view2">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="$1_form_view"/>
+            <field name="act_window" ref="act_$1"/>
+        </record>
+    '''
+
+  'Tryton: Record for button':
+    'prefix': 'tryton_record_button'
+    'body': '''
+        <record model="ir.model.button" id="${1:model_id}_${2:button_id}_button">
+            <field name="name">$2</field>
+            <field name="model" search="[('model', '=', '${3:model.model}')]"/>
+        </record>
+        <record model="ir.model.button-res.group"
+            id="$1_$2_button_${4:group_id}">
+            <field name="button" ref="$1_$2_button"/>
+            <field name="group" ref="${5:other_module.}$4"/>
+        </record>
+    '''
+
+  'Tryton: Record Field Tag ref':
+    'prefix': 'tryton_rfield'
+    'body': '<field name="${1:fieldname}" ref="${2:xml_id}"/>'
+
+  'Tryton: Record Field Tag':
+    'prefix': 'tryton_rfield'
+    'body': '<field name="${1:fieldname}">${2:Field Value}</field>'
+
+  'Tryton: Record for Inherited List View':
+    'prefix': 'tryton_record_inlist'
+    'body': '''
+        <record model="ir.ui.view" id="${1:model_id}_view_list">
+            <field name="model">${2:model.name}</field>
+            <field name="inherit" ref="${3:inherit_model}.${4:$1_view_${5:tree}}"/>
+            <field name="name">$1_list</field>
+        </record>
+    '''
+
+  'Tryton: Action Window List View record':
+    'prefix': 'tryton_act_formview'
+    'body': '''
+        <record model="ir.action.act_window.view" id="act_${1:model_id}_view1">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="$1_list_view"/>
+            <field name="act_window" ref="act_$1"/>
+        </record>
+    '''
+
+  'Tryton: Record for Form View':
+    'prefix': 'tryton_record_form'
+    'body': '''
+        <record model="ir.ui.view" id="${1:model_id}_view_form">
+            <field name="model">${2:model.name}</field>
+            <field name="type">form</field>
+            <field name="name">$1_form</field>
+        </record>
+    '''
+
+# views
+
+  'Tryton: Tree View':
+    'prefix': 'tryton_view_tree'
+    'body': '''
+      <tree string="${1:Titles}">
+          ${2}
+      </tree>
+    '''
+
+  'Tryton: View Label Tag':
+    'prefix': 'tryton_vlabel'
+    'body': '<label name="${1:fieldname}"/>'
+
+  'Tryton: View Field Tag with label':
+    'prefix': 'tryton_vfield'
+    'body': '''
+        <label name="$1"/>
+        <field name="${1:fieldname}"/>
+    '''
+
+  'Tryton: View Field Tag with separator':
+    'prefix': 'tryton_vfield'
+    'body': '''
+        ${4:<separator name="$1"$2/>
+        }<field name="${1:fieldname}"${2: colspan="${3}"}/>
+    '''
+
+  'Tryton: Inherited Form View':
+    'prefix': 'tryton_view_inform'
+    'body': '''
+        <data>
+            <xpath expr="/form/${1:field}[@${2:name}='${3:fieldname}']" position="${4:after}">
+                ${5}
+            </xpath>
+        </data>
+    '''
+
+  'Tryton: Button':
+    'prefix': 'tryton_vbutton'
+    'body': '<button name="${1:name}" string="${2:label}"${3: icon="${4:tryton-executable}"}${5: confirm="${6:Are you sure?}"}${7: colspan="${8:2}"}${9: states="${10}"}${11: help="${12}"}/>'
+
+  'Tryton: View Field Tag for One2Many':
+    'prefix': 'tryton_vfield'
+    'body': '''
+        ${4:<separator name="$1"$2/>
+        }<field name="${1:fieldname}" mode="tree,form"${2: colspan="${3}"}/>
+    '''
+
+  'Tryton: View Field Tag':
+    'prefix': 'tryton_vfield'
+    'body': '<field name="${1:fieldname}"/>'
+
+  'Tryton: Form View':
+    'prefix': 'tryton_view_form'
+    'body': '''
+      <form string="${1:Title}"${2: col="${3}"}>
+          ${4}
+      </form>
+    '''
+
+  'Tryton: Inherited Tree View':
+    'prefix': 'tryton_view_intree'
+    'body': '''
+        <data>
+            <xpath expr="/tree/${1:field}[@${2:name}='${3:fieldname}']" position="${4:after}">
+                ${5}
+            </xpath>
+        </data>
+    '''

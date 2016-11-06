@@ -1,0 +1,19 @@
+{
+  "name": "tryton-snippets",
+  "main": "./lib/main",
+  "version": "0.1.0",
+  "description": "Snippets for the Tryton software development",
+  "keywords": [
+    "snippets",
+    "tryton",
+    "python",
+    "xml"
+  ],
+  "activationCommands": {},
+  "repository": "https://github.com/raimonesteve/atom-tryton-snippets",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": {}
+}

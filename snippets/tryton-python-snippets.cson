@@ -1,0 +1,706 @@
+'.source.python':
+
+  'Tryton: Help':
+    'prefix': 'tryton_help'
+    'body': """
+        # tryton_fields.Date: Tryton: fields.Date()
+        # tryton_fields.Function: Tryton: fields.Function()
+        # tryton_register: Tryton: __register__()
+        # tryton_fields.Time: Tryton: fields.Time()
+        # tryton_fields.Float: Tryton: fields.Float()
+        # tryton_config: Tryton: Trytond Config
+        # tryton_import_transaction: Tryton: Transaction classes import
+        # tryton_uniq_constraint_v4: Tryton: UNIQUE SQL Constraint
+        # tryton_fields.Timestamp: Tryton: fields.Timestamp()
+        # tryton_getter: Tryton: function multi fields getter
+        # tryton_fields.Boolean: Tryton: fields.Boolean()
+        # tryton_getter_company_config: Tryton: getter for company dependant field (property) in configuration singleton
+        # tryton_on_change_with: Tryton: function to compute functional field and value of field when others change value
+        # tryton_getter: Tryton: functional field instance getter
+        # tryton_fields.Binary: Tryton: fields.Binary()
+        # tryton_search: Tryton: search() reimplementation
+        # tryton_fields.Many2Many: Tryton: fields.Many2Many()
+        # utf8-header: UTF8 Header
+        # tryton_create: Tryton: create() reimplementation
+        # tryton_depends: Trycursorton: decorator for on_change/_with functions to specify which fields supply to the function in self object
+        # tryton_on_change_with: Tryton: function to compute value of field when others change value
+        # tryton_default: Tryton: default_fieldname() function
+        # tryton_setup: Tryton: __setup__()
+        # tryton_fields.Selection: Tryton: fields.Selection(): fixed list of options
+        # tryton_fields.One2One: Tryton: fields.One2One() main relation side
+        # tryton_cursor: Tryton: Cursor
+        # tryton_fields.Selection: Tryton: fields.Selection(): dynamic options
+        # tryton_states: Tryton: states fields attribute
+        # tryton_header: Tryton: modules file header
+        # tryton_fields.Integer: Tryton: fields.Integer()fieldname
+        # tryton_import_model: Tryton: model classes import
+        # tryton_fields.Char: Tryton: fields.Char()
+        # tryton_fields.Many2One: Tryton: fields.Many2One()
+        # tryton_raise_warning_class: Tryton: raise user warning class
+        # tryton_import_pyson: Tryton: Pyson classes import
+        # tryton_fields.One2Many: Tryton: fields.One2Many()
+        # tryton_class: Tryton: new model
+        # tryton_validate: Tryton: validate() classmethod validation
+        # tryton_import_wizard: Tryton: wizard classes import
+        # tryton_error_messages: Tryton: cls._error_messages extension
+        # tryton_fields.Numeric: Tryton: fields.Numeric()
+        # tryton_order: Tryton: _order attribute of Model
+        # tryton_inclass: Tryton: inherit model
+        # tryton_delete: Tryton: delete() reimplementation
+        # tryton_fields.Text: Tryton: fields.Text()
+        # tryton_setter: Tryton: functional field setter
+        # tryton_searcher: Tryton: functional field searcher
+        # tryton_validate: Tryton: validate() instance method validation
+        # tryton_getter: Tryton: functional field class getter
+        # tryton_fields.DateTime: Tryton: fields.DateTime()
+        # tryton_write: Tryton: write() reimplementation
+        # tryton_cursor_v4: Tryton: Cursor v4
+        # tryton_fields.Reference: Tryton: fields.Reference()
+        # tryton_get_rec_name: Tryton: getter for rec_name
+        # tryton_copy: Tryton: copy() reimplementation
+        # tryton_fields.BigInteger: Tryton: fields.BigInteger()
+        # tryton_context: Tryton: Context
+        # tryton_on_change: Tryton: function to compute values of fields when field change value
+        # tryton_setter_company_config: Tryton: setter for company dependant field (property) in configuration singleton
+        # tryton_raise_error: Tryton: raise user error
+        # tryton_company: Tryton: standard definition of company field
+        # tryton_sql_constraints: Tryton: cls._sql_constraints
+        # tryton_raise_warning_self: Tryton: raise user warning self
+        # tryton_imports: Tryton: common imports
+    """
+
+# calls
+
+  'Tryton: raise user warning class':
+    'prefix': 'tryton_raise_warning_class'
+    'body': """
+        cls.raise_user_warning('${1:warning_id}',
+            '${2:warning_message_name}')
+        # move next line to cls._error_messages.update
+        '${3:warning_message_name}': '${4:Warning Text}',
+    """
+
+  'Tryton: raise user warning self':
+    'prefix': 'tryton_raise_warning_self'
+    'body': """
+        self.raise_user_warning('%s.${1:warning_id}' % self,
+            '${2:warning_message_name}', self.rec_name)
+        # move next line to cls._error_messages.update
+        '${3:warning_message_name}': '${4:Warning Text}',
+    """
+
+  'Tryton: raise user error':
+    'prefix': 'tryton_raise_error'
+    'body': """
+        cls.raise_user_error('${1:exception_text_name}'${2:, (${3:substitution value},)}${4:, raise_exception=False})
+        # move next line to cls._error_messages.update
+        '$1': '${5:Exception Text}',
+    """
+
+# common
+
+  'Tryton: modules file header':
+    'prefix': 'tryton_header'
+    'body': """
+        # The COPYRIGHT file at the top level of this repository contains the full
+        # copyright notices and license terms.
+    """
+
+  'Tryton: model classes import':
+    'prefix': 'tryton_import_model'
+    'body': 'from trytond.model import Model, ModelSQL, ModelView, Workflow, fields'
+
+  'UTF8 Header':
+    'prefix': 'utf8-header'
+    'body': '# -*- coding: utf-8 -*-'
+
+  'Tryton: common imports':
+    'prefix': 'tryton_imports'
+    'body': """
+        from trytond.model import, ModelSQL ModelView, fields
+        from trytond.pyson import Eval
+        from trytond.backend import TableHandler
+        from trytond.transaction import Transaction
+        from trytond.pool import Pool
+    """
+
+  'Tryton: Transaction classes import':
+    'prefix': 'tryton_import_transaction'
+    'body': "from trytond.transaction import Transaction"
+
+  'Tryton: wizard classes import':
+    'prefix': 'tryton_import_wizard'
+    'body': """
+        from trytond.wizard import (Wizard, Button, StateAction, StateTransition,
+            StateView)
+    """
+
+  'Tryton: Pyson classes import':
+    'prefix': 'tryton_import_pyson'
+    'body': 'from trytond.pyson import Bool, If, In, Equal, Eval, Get, Not'
+
+  'Tryton: Cursor':
+    'prefix': 'tryton_cursor'
+    'body': 'cursor = Transaction().cursor'
+
+  'Tryton: Cursor v4':
+    'prefix': 'tryton_cursor_v4'
+    'body': 'cursor = Transaction().connection.cursor()'
+
+  'Tryton: Context':
+    'prefix': 'tryton_context'
+    'body': 'context = Transaction().context'
+
+  'Tryton: Trytond Config':
+    'prefix': 'tryton_config'
+    'body': """
+        from trytond.config import config as config_
+
+        DIGITS = config_.getint('product', 'price_decimal', default=4)
+
+    """
+
+# decorator
+
+  'Trycursorton: decorator for on_change/_with functions to specify which fields supply to the function in self object':
+    'prefix': 'tryton_depends'
+    'body': "@fields.depends(${1:used fields})"
+
+# fields
+
+  'Tryton: fields.Integer()':
+    'prefix': 'tryton_fields.Integer'
+    'body': """
+        ${1:fieldname} = fields.Integer('${2:Field Title}'${3:, required=True}${4:, readonly=True}${7}${5:,
+            help='${6}'})
+    """
+
+  'Tryton: fields.Time()':
+    'prefix': 'tryton_fields.Time'
+    'body': """
+        ${1:fieldname} = fields.Time('${2:Field Title}'${3:, format=${4:'%H:M:%S'}}${5:, required=True}${6:, readonly=True}${9}${7:,
+            help='${8}'})
+    """
+
+  'Tryton: fields.One2One() main relation side':
+    'prefix': 'tryton_fields.One2One'
+    'body': """
+        ${1:fieldname} = fields.One2One('${2:current-model}-${3:target.model}', '${4:field_to_this}', '${5:field_to_target}', '${6:Field Title}'${7:, required=True}${8:, readonly=True}${17}${15:,
+            help='${16}'})
+
+
+        class ${9:CurrentModel}${10:TargetModel}(ModelSQL):
+            '${11:$9} - ${12:$10}'
+            __name__ = '$2-$3'
+            ${13:_table = '${14:shorter_table_name}'}
+            $4 = fields.Many2One('$2', '$11', ondelete='CASCADE', required=True, select=True)
+            $5 = fields.Many2One('$3', '$12', ondelete='CASCADE', required=True, select=True)
+
+            @classmethod
+            def __setup__(cls):
+                super($9$10, cls).__setup__()
+                cls._sql_constraints += [
+                    ('$4_unique', 'UNIQUE($4)', 'The $11 must be unique.'),
+                    ('$5_unique', 'UNIQUE($5)', 'The $12 must be unique.'),
+                    ]
+    """
+
+  'Tryton: fields.Many2Many()':
+    'prefix': 'tryton_fields.Many2Many'
+    'body': """
+        ${1:fieldname} = fields.Many2Many('${2:current-model}-${3:target.model}', '${4:field_to_this}', '${5:field_to_target}', '${6:Field Title}'${15}${13:,
+            help='${14}'})
+
+
+        class ${7:CurrentModel}${8:TargetModel}(ModelSQL):
+            '${9:$7} - ${10:$8}'
+            __name__ = '$2-$3'
+            ${11:_table = '${12:shorter_table_name}'
+            }$4 = fields.Many2One('$2', '$9', ondelete='CASCADE', required=True, select=True)
+            $5 = fields.Many2One('$3', '$10', ondelete='CASCADE', required=True, select=True)
+    """
+
+  'T"""rytonryton: fields.BigInteger()':
+    'prefix': 'tryton_fields.BigInteger'
+    'body': """
+        ${1:fieldname} = fields.BigInteger('${2:Field Title}'${3:, required=True}${4:, readonly=True}${7}${5:,
+            help='${6}'})
+    """
+
+  'Tryton: fields.Many2One()':
+    'prefix': 'tryton_fields.Many2One'
+    'body': """
+        ${1:fieldname} = fields.Many2One('${2:target.model}', '${3:Field Title}'${4:, required=True}${5:, readonly=True}${6:, select=True}${7:, ondelete='${8:CASCADE}'}${11}${9:,
+            help='${10}'})
+    """
+
+  'Tryton: fields.Date()':
+    'prefix': 'tryton_fields.Date'
+    'body': """
+        ${1:fieldname} = fields.Date('${2:Field Title}'${3:, required=True}${4:, readonly=True}${7}${5:,
+            help='${6}'})
+    """
+
+  'Tryton: fields.One2Many()':
+    'prefix': 'tryton_fields.One2Many'
+    'body': """
+        ${1:fieldname} = fields.One2Many('${2:target.model}', '${3:many2one_field_in_target}', '${4:Field Title}'${5:, required=True}${6:, readonly=True}${9}${7:,
+            help='${8}'})
+    """
+
+  'Tryton: fields.Float()':
+    'prefix': 'tryton_fields.Float'
+    'body': """
+        ${1:fieldname} = fields.Float('${2:Field Title}', digits=(16, ${3:Eval('unit_digits', 2)})${4:, required=True}${5:, readonly=True}${8}${6:,
+            help='${7}'})
+    """
+
+  'Tryton: fields.Boolean()':
+    'prefix': 'tryton_fields.Boolean'
+    'body': """
+        ${1:fieldname} = fields.Boolean('${2:Field Title}'${3:, readonly=True}${6}${4:,
+            help='${5}'})
+    """
+
+  'Tryton: fields.Binary()':
+    'prefix': 'tryton_fields.Binary'
+    'body': """
+        ${1:fieldname} = fields.Binary('${2:Field Title}'${3:, filename='fieldname_filename'}${4:, required=True}${5:, readonly=True}${8}${6:,
+            help='${7}'})
+    """
+
+  'Tryton: fields.Selection(): fixed list of options':
+    'prefix': 'tryton_fields.Selection'
+    'body': """
+      ${1:fieldname} = fields.Selection([
+              ${2:('draft', 'Draft'),}${3}
+              ], '${4:Field Title}'${5:, required=True}${6:, readonly=True}${9}${7:,
+          help='${8}'})
+    """
+
+  'Tryton: fields.Char()':
+    'prefix': 'tryton_fields.Char'
+    'body': """
+      ${1:fieldname} = fields.Char('${2:Field Title}'${3:, translate=True}${4:, size=${5}}${6:, required=True}${7:, readonly=True}${10}${8:,
+          help='${9}'})
+    """
+
+  'Tryton: standard definition of company field':
+    'prefix': 'tryton_company'
+    'body': """
+      company = fields.Many2One('company.company', 'Company', required=True,
+          domain=[
+              ('id', If(In('company', Eval('context', {})), '=', '!='),
+                  Eval('context', {}).get('company', -1)),
+              ])
+    """
+
+  'Tryton: fields.DateTime()':
+    'prefix': 'tryton_fields.DateTime'
+    'body': """
+        ${1:fieldname} = fields.DateTime('${2:Field Title}'${3:, format=${4:'%H:M:%S'}}${5:, required=True}${6:, readonly=True}${9}${7:,
+            help='${8}'})
+    """
+
+  'Tryton: fields.Timestamp()':
+    'prefix': 'tryton_fields.Timestamp'
+    'body': """
+        ${1:fieldname} = fields.Timestamp('${2:Field Title}'${3:, required=True}${4:, readonly=True}${7}${5:,
+            help='${6}'})
+    """
+
+  'Tryton: fields.Function()':
+    'prefix': 'tryton_fields.Function'
+    'body': """
+      ${1:fieldname} = fields.Function(${4:field},
+          'get_$1'${2:, setter='set_$1'}${3:, searcher='search_$1'})
+    """
+
+  'Tryton: fields.Reference()':
+    'prefix': 'tryton_fields.Reference'
+    'body': """
+        ${1:fieldname} = fields.Reference('${2:Field Title}', selection='get_${3:$1}'${4:, selection_change_with=[${5:'fieldname',}]}${6:, required=True}${7:, readonly=True}${8:, select=True}${11}${9:,
+            help='${10}'})
+
+      @classmethod
+      def _get_$3(cls):
+          'Return list of Model names for $1 Reference'
+          return [${12}]
+
+      @classmethod
+      def get_$3(cls):
+          pool = Pool()
+          Model = pool.get('ir.model')
+          models = cls._get_$3()
+          models = Model.search([
+                  ('model', 'in', models),
+                  ])
+          return [('', '')] + [(m.model, m.name) for m in models]
+    """
+
+  'Tryton: fields.Numeric()':
+    'prefix': 'tryton_fields.Numeric'
+    'body': """
+        ${1:fieldname} = fields.Numeric('${2:Field Title}', digits=(16, ${3:4})${4:, required=True}${5:, readonly=True}${8}${6:,
+            help='${7}'})
+    """
+
+  'Tryton: fields.Selection(): dynamic options':
+    'prefix': 'tryton_fields.Selection'
+    'body': """
+        ${1:fieldname} = fields.Selection('get_${2:$1s}', '${3:Field Title}'${4:, sort=True}${5:, selection_change_with=[${6:'fieldname',}]}${7:, required=True}${8:, readonly=True}${11}${9:,
+            help='${10}'})
+
+        @staticmethod
+        def get_$2():
+            return [(name, title),]
+    """
+
+  'Tryton: fields.Text()':
+    'prefix': 'tryton_fields.Text'
+    'body': """
+        ${1:fieldname} = fields.Text('${2:Field Title}'${3:, translate=True}${4:, size=${5}}${6:, required=True}${7:, readonly=True}${10}${8:,
+            help='${9}'})
+    """
+
+  'Tryton: states fields attribute':
+    'prefix': 'tryton_states'
+    'body': """
+      states={
+          	${1:'${2:required}': ${3:Eval('${4:field_name}', 0)},}
+          	}, depends=['$4']
+    """
+
+# methods
+
+  'Tryton: functional field instance getter':
+    'prefix': 'tryton_getter'
+    'body': """
+        def get_${1:fieldname}(self, name):${3}
+            return ${2}
+
+    """
+
+  'Tryton: setter for company dependant field (property) in configuration singleton':
+    'prefix': 'tryton_setter_company_config'
+    'body': """
+        @classmethod
+        def set_company_config(cls, configs, name, value):
+            pool = Pool()
+            CompanyConfig = pool.get('stock.configuration.company')
+
+            company_id = Transaction().context.get('company')
+            company_configs = CompanyConfig.search([
+                    ('company', '=', company_id),
+                    ])
+            if company_configs:
+                company_config = company_configs[0]
+            else:
+                company_config = CompanyConfig(company=company_id)
+            setattr(company_config, name, value)
+            company_config.save()
+
+    """
+
+  'Tryton: functional field class getter':
+    'prefix': 'tryton_getter'
+    'body': """
+        @classmethod
+        def get_${1:fieldname}(cls, ${2:records}, name):
+          ryton  ${4}
+            return ${3:{record_id: record_value}}
+
+    """
+
+  'Tryton: getter for company dependant field (property) in configuration singleton':
+    'prefix': 'tryton_getter_company_config'
+    'body': """
+      @classmethod
+      def get_company_config(cls, configs, names):
+          pool = Pool()
+          CompanyConfig = pool.get('stock.configuration.company')
+
+          company_id = Transaction().context.get('company')
+          company_configs = CompanyConfig.search([
+                  ('company', '=', company_id),
+                  ])
+
+          res = {}
+          for fname in names:
+              res[fname] = {}.fromkeys([c.id for c in configs], None)
+              if company_configs:
+                  val = getattr(company_configs[0], fname)
+                  if isinstance(val, Model):
+                      val = val.id
+                  res[fname][configs[0].id] = val
+          return res
+
+    """
+
+  'Tryton: create() reimplementation':
+    'prefix': 'tryton_create'
+    'body': """
+      @classmethod
+      def create(cls, vlist):
+          ${3:for vals in vlist:
+              }
+          ${2:return} super(${1:ClassName}, cls).create(vlist)
+
+    """
+
+  'Tryton: write() reimplementation':
+    'prefix': 'tryton_write'
+    'body': """
+        @classmethod
+        def write(cls, *args):
+            actions = iter(args)
+            args = []
+            for records, values in zip(actions, actions):
+                ${2:values['example'] = True  # add/del/modify items from values}
+                args.extend((records, values))
+            super(${1:ClassName}, cls).write(*args)
+
+    """
+
+  'Tryton: copy() reimplementation':
+    'prefix': 'tryton_copy'
+    'body': """
+        @classmethod
+        def copy(cls, ${1:records}, default=None):
+            if default is None:
+                default = {}
+            else:
+                default = default.copy()
+            ${3}
+            return super(${2:ClassName}, cls).copy($1, default=default)
+
+    """
+
+  'Tryton: delete() reimplementation':
+    'prefix': 'tryton_delete'
+    'body': """
+        @classmethod
+        def delete(cls, ${1:records}):
+            ${3}
+            super(${2:ClassName}, cls).delete($1)
+
+    """
+
+  'Tryton: __setup__()':
+    'prefix': 'tryton_setup'
+    'body': """
+        @classmethod
+        def __setup__(cls):
+            super(${1:ClassName}, cls).__setup__()
+            ${2}
+
+    """
+
+  'Tryton: validate() instance method validation':
+    'prefix': 'tryton_validate'
+    'body': """
+        @classmethod
+        def validate(cls, ${1:records}):
+            super(${2:ClassName}, cls).validate($1)
+            for ${3:record} in $1:
+                $3.check_${4:validation}()
+
+        def check_$4(self):
+            ${5}
+
+    """
+
+  'Tryton: functional field setter':
+    'prefix': 'tryton_setter'
+    'body': """
+        @classmethod
+        def set_${1:fielname}(cls, ${2:records}, name, value):
+            ${3:cls.write($2, {
+                    '${4:fieldname}': ${5:value},
+                    })}
+    """
+
+  'Tryton: function to compute value of field when others change value':
+    'prefix': 'tryton_on_change_with'
+    'body': """
+        @fields.depends(${2:trigger/used fields})
+        def on_change_with_${1:fieldname}(self):${4}
+            return ${3}
+
+    """
+
+  'Tryton: validate() classmethod validation':
+    'prefix': 'tryton_validate'
+    'body': """
+        @classmethod
+        def validate(cls, ${1:records}):
+            super(${2:ClassName}, cls).validate($1)
+            cls.check_${4:validation}($1)
+
+        @classmethod
+        def check_$4(cls, $1):
+            ${5}
+
+    """
+
+  'Tryton: function to compute values of fields when field change value':
+    'prefix': 'tryton_on_change'
+    'body': """
+        @fields.depends(${2:used fields})
+        def on_change_${1:fieldname}(self):${7}
+            return ${3:{
+                ${4:'${5:res_fieldname}': ${6},}
+                }}
+
+    """
+
+  'Tryton: getter for rec_name':
+    'prefix': 'tryton_get_rec_name'
+    'body': """
+        def get_rec_name(self, name):
+            return ${1}
+
+    """
+
+  'Tryton: search() reimplementation':
+    'prefix': 'tryton_search'
+    'body': """
+        @classmethod
+        def search(cls, domain, offset=0, limit=None, order=None, count=False,
+        		query=False):
+            ${2}
+        	return super(${1:ClassName}, cls).search(domain, offset=offset, limit=limit,
+        		order=order, count=count, query=query)
+
+    """
+
+  'Tryton: function to compute functional field and value of field when others change value':
+    'prefix': 'tryton_on_change_with'
+    'body': """
+        @fields.depends(${2:trigger/used fields})
+        def on_change_with_${1:fieldname}(self, name=None):${4}
+            return ${3}
+
+    """
+
+  'Tryton: __register__()':
+    'prefix': 'tryton_register'
+    'body': """
+        @classmethod
+        def __register__(cls, module_name):
+            TableHandler = backend.get('TableHandler')
+            cursor = Transaction().cursor
+            table = cls.__table__()
+
+            ${2:# Migration from ${3:3.4.0}: ${4:Rename column}
+            handler = TableHandler(cursor, cls, module_name)
+            ${5:new_column}_exists = handler.column_exist('$5')}
+
+            super(${1:ClassName}, cls).__register__(module_name)
+
+            ${6:# Migration from $3: $4
+            handler = TableHandler(cursor, cls, module_name)
+            if handler.column_exists('${7:old_column}'):
+                if not $5_exists:
+                    table.update(['$5'], [table.$7])
+                handler.drop_column('$7')}
+            ${7}
+
+    """
+
+  'Tryton: default_fieldname() function':
+    'prefix': 'tryton_default'
+    'body': """
+        @staticmethod
+        def default_${1:field_name}():
+            return ${2:True}
+
+    """
+
+  'Tryton: functional field searcher':
+    'prefix': 'tryton_searcher'
+    'body': """
+        @classmethod
+        def search_${1:fieldname}(cls, name, clause):
+            return [
+                ${2}
+                ]
+
+    """
+
+  'Tryton: function multi fields getter':
+    'prefix': 'tryton_getter'
+    'body': """
+        @classmethod
+        def get_${1:name}(cls, ${2:records}, names):
+            ${4}
+            return ${3:{'fieldname': {record_id: record_value}}}
+
+    """
+
+# models
+
+  'Tryton: new model':
+    'prefix': 'tryton_class'
+    'body': """
+        from trytond.model import ModelSQL, ModelView, fields
+
+        __all__ = ['${1}']
+
+
+        class ${1:ClassName}(ModelSQL, ModelView):
+      cursor      '''${2:Model Title}'''
+            __name__ = '${3:model.name}'
+            ${4}
+    """
+
+  'Tryton: inherit model':
+    'prefix': 'tryton_inclass'
+    'body': """
+        from trytond.pool import PoolMeta
+
+        __all__ = ['$1']
+
+
+        class ${1:ClassName}:
+            __name__ = '${2:model.name}'
+            __metaclass__ = PoolMeta
+            ${3}
+
+    """
+
+  'Tryton: _order attribute of Model':
+    'prefix': 'tryton_order'
+    'body': "_order = [('${1:fieldname}', '${2:ASC}')${3}]"
+
+# setup
+
+  'Tryton: UNIQUE SQL Constraint':
+    'prefix': 'tryton_uniq_constraint'
+    'body': """
+        ('${1:fieldname}_uniq', 'UNIQUE ($1)',
+            'The ${2:Field Title} of the ${3:Model Title} must be unique.'),
+    """
+
+  'Tryton: UNIQUE SQL Constraint':
+    'prefix': 'tryton_uniq_constraint_v4'
+    'body': """
+        ('${1:fieldname}_uniq', Unique(t, t.$1),
+            'The ${2:Field Title} of the ${3:Model Title} must be unique.'),
+    """
+
+  'Tryton: cls._sql_constraints':
+    'prefix': 'tryton_sql_constraints'
+    'body': """
+        cls._sql_constraints += [
+            ${1}
+            ]
+    """
+
+  'Tryton: cls._error_messages extension':
+    'prefix': 'tryton_error_messages'
+    'body': """
+        cls._error_messages.update({
+                ${1}
+                })
+    """
