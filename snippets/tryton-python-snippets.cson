@@ -67,6 +67,7 @@
         # tryton_sql_constraints: Tryton: cls._sql_constraints
         # tryton_raise_warning_self: Tryton: raise user warning self
         # tryton_imports: Tryton: common imports
+        # tryton_save_values: Tryton: Save values (write)
     """
 
 # calls
@@ -672,6 +673,15 @@
   'Tryton: _order attribute of Model':
     'prefix': 'tryton_order'
     'body': "_order = [('${1:fieldname}', '${2:ASC}')${3}]"
+
+  'Tryton: Save values (write)':
+    'prefix': 'tryton_save_values'
+    'body': """
+        to_write.extend(([${1:record}], ${1}._save_values))
+
+        if to_write:
+            ${2:Model}.write(*to_write)
+    """
 
 # setup
 
