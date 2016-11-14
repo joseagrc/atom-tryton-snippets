@@ -650,7 +650,7 @@
 
 
         class ${1:ClassName}(ModelSQL, ModelView):
-      cursor      '''${2:Model Title}'''
+            '''${2:Model Title}'''
             __name__ = '${3:model.name}'
             ${4}
     """
