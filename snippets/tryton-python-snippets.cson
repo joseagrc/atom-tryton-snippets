@@ -68,6 +68,7 @@
         # tryton_raise_warning_self: Tryton: raise user warning self
         # tryton_imports: Tryton: common imports
         # tryton_save_values: Tryton: Save values (write)
+        # tryton_set_user_root: Tryton: Set User root
     """
 
 # calls
@@ -713,4 +714,13 @@
         cls._error_messages.update({
                 ${1}
                 })
+    """
+
+# misc
+
+  'Tryton: Set User root':
+    'prefix': 'tryton_set_user_root'
+    'body': """
+        with Transaction().set_user(0):
+            ${1}
     """
