@@ -69,6 +69,7 @@
         # tryton_imports: Tryton: common imports
         # tryton_save_values: Tryton: Save values (write)
         # tryton_set_user_root: Tryton: Set User root
+        # tryton_round_decimals: Tryton: Round decimals (quantize)
     """
 
 # calls
@@ -724,3 +725,7 @@
         with Transaction().set_user(0):
             ${1}
     """
+
+  'Tryton: Round decimals (quantize)':
+    'prefix': 'tryton_round_decimals'
+    'body': "${1}.quantize(Decimal(str(10.0 ** -${3:digits})))"
