@@ -472,9 +472,8 @@
         def copy(cls, ${1:records}, default=None):
             if default is None:
                 default = {}
-            else:
-                default = default.copy()
-            ${3}
+            default = default.copy()
+            default.setdefault('${3}', None)
             return super(${2:ClassName}, cls).copy($1, default=default)
 
     """
