@@ -318,6 +318,14 @@
     'body': """
       ${1:fieldname} = fields.Function(${4:field},
           'get_$1'${2:, setter='set_$1'}${3:, searcher='search_$1'})
+
+      @classmethod
+      def get_$1(cls, records, names):
+          res = {n: {r.id: None for r in records} for n in names}
+          for name in names:
+              for record in records:
+                  res[name][record.id] = None
+          return res
     """
 
   'Tryton: fields.Reference()':
