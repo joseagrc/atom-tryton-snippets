@@ -151,16 +151,6 @@
     'prefix': 'tryton_rfield'
     'body': '<field name="${1:fieldname}" eval="${2:value}"/>'
 
-  'Tryton: Action Window List View record':
-    'prefix': 'tryton_act_listview'
-    'body': '''
-        <record model="ir.action.act_window.view" id="act_${1:model_id}_view2">
-            <field name="sequence" eval="20"/>
-            <field name="view" ref="$1_form_view"/>
-            <field name="act_window" ref="act_$1"/>
-        </record>
-    '''
-
   'Tryton: Record for button':
     'prefix': 'tryton_record_button'
     'body': '''

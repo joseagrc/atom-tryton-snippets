@@ -10,7 +10,8 @@
         # tryton_fields.Float: Tryton: fields.Float()
         # tryton_config: Tryton: Trytond Config
         # tryton_import_transaction: Tryton: Transaction classes import
-        # tryton_uniq_constraint_v4: Tryton: UNIQUE SQL Constraint
+        # tryton_uniq_constraint_3x: Tryton: UNIQUE SQL Constraint
+        # tryton_uniq_constraint: Tryton: UNIQUE SQL Constraint
         # tryton_fields.Timestamp: Tryton: fields.Timestamp()
         # tryton_getter: Tryton: function multi fields getter
         # tryton_fields.Boolean: Tryton: fields.Boolean()
@@ -695,15 +696,15 @@
 
 # setup
 
-  'Tryton: UNIQUE SQL Constraint':
-    'prefix': 'tryton_uniq_constraint'
+  'Tryton: UNIQUE SQL Constraint 3x':
+    'prefix': 'tryton_uniq_constraint_3x'
     'body': """
         ('${1:fieldname}_uniq', 'UNIQUE ($1)',
             'The ${2:Field Title} of the ${3:Model Title} must be unique.'),
     """
 
   'Tryton: UNIQUE SQL Constraint':
-    'prefix': 'tryton_uniq_constraint_v4'
+    'prefix': 'tryton_uniq_constraint'
     'body': """
         ('${1:fieldname}_uniq', Unique(t, t.$1),
             'The ${2:Field Title} of the ${3:Model Title} must be unique.'),
