@@ -4,7 +4,8 @@
     'prefix': 'tryton_help'
     'body': """
         # tryton_fields.Date: Tryton: fields.Date()
-        # tryton_fields.Function: Tryton: fields.Function()
+        # tryton_fields.Function_names: Tryton: fields.Function() (names)
+        # tryton_fields.Function_name: Tryton: fields.Function() (name)
         # tryton_register: Tryton: __register__()
         # tryton_fields.Time: Tryton: fields.Time()
         # tryton_fields.Float: Tryton: fields.Float()
@@ -71,6 +72,7 @@
         # tryton_save_values: Tryton: Save values (write)
         # tryton_set_user_root: Tryton: Set User root
         # tryton_round_decimals: Tryton: Round decimals (quantize)
+        # tryton_dict: Tryton: Dict
     """
 
 # calls
@@ -314,8 +316,8 @@
             help='${6}'})
     """
 
-  'Tryton: fields.Function()':
-    'prefix': 'tryton_fields.Function'
+  'Tryton: fields.Function() (names)':
+    'prefix': 'tryton_fields.Function_names'
     'body': """
       ${1:fieldname} = fields.Function(${4:field},
           'get_$1'${2:, setter='set_$1'}${3:, searcher='search_$1'})
@@ -326,6 +328,20 @@
           for name in names:
               for record in records:
                   res[name][record.id] = None
+          return res
+    """
+
+  'Tryton: fields.Function() (name)':
+    'prefix': 'tryton_fields.Function_name'
+    'body': """
+      ${1:fieldname} = fields.Function(${4:field},
+          'get_$1'${2:, setter='set_$1'}${3:, searcher='search_$1'})
+
+      @classmethod
+      def get_$1(cls, records, name):
+          res = dict((x.id, None) for x in records)
+          for record in records:
+              res[record.id] = None
           return res
     """
 
@@ -738,3 +754,7 @@
   'Tryton: Round decimals (quantize)':
     'prefix': 'tryton_round_decimals'
     'body': "${1}.quantize(Decimal(str(10.0 ** -${3:digits})))"
+
+  'Tryton: Dict':
+    'prefix': 'tryton_dict'
+    'body': "values = dict((x.id, x) for x in records)"
