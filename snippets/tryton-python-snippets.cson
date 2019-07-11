@@ -73,6 +73,7 @@
         # tryton_set_user_root: Tryton: Set User root
         # tryton_round_decimals: Tryton: Round decimals (quantize)
         # tryton_dict: Tryton: Dict
+        # tryton_sql_execute: SQL execute
     """
 
 # calls
@@ -758,3 +759,13 @@
   'Tryton: Dict':
     'prefix': 'tryton_dict'
     'body': "values = dict((x.id, x) for x in records)"
+
+  'Tryton: SQL execute':
+    'prefix': 'tryton_sql_execute'
+    'body': """
+        from trytond.transaction import Transaction
+        cursor = Transaction().connection.cursor()
+        cursor.execute(query)
+        # record, = cursor.fetchone()
+        # for record in cursor.fetchall():
+    """
