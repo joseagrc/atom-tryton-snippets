@@ -7,6 +7,7 @@
         # tryton_fields.Function_names: Tryton: fields.Function() (names)
         # tryton_fields.Function_name: Tryton: fields.Function() (name)
         # tryton_register: Tryton: __register__()
+        # tryton_register_old: Tryton: __register__() > 3.8 & < 5.4
         # tryton_fields.Time: Tryton: fields.Time()
         # tryton_fields.Float: Tryton: fields.Float()
         # tryton_config: Tryton: Trytond Config
@@ -71,6 +72,7 @@
         # tryton_imports: Tryton: common imports
         # tryton_save_values: Tryton: Save values (write)
         # tryton_set_user_root: Tryton: Set User root
+        # tryton_update_create_write: 'Tryton: Update create and write method
         # tryton_round_decimals: Tryton: Round decimals (quantize)
         # tryton_dict: Tryton: Dict
         # tryton_sql_execute: SQL execute
@@ -617,24 +619,48 @@
     'body': """
         @classmethod
         def __register__(cls, module_name):
-            TableHandler = backend.get('TableHandler')
-            cursor = Transaction().cursor
+            pool = Pool()
+            ${1:ModelName} = pool.get(${1:Model})
+            cursor = Transaction().connection.cursor()
+            exist = backend.TableHandler.table_exist(cls._table)
             table = cls.__table__()
+            ${1:Model} = ${1:ModelName}.__table__()
 
-            ${2:# Migration from ${3:3.4.0}: ${4:Rename column}
-            handler = TableHandler(cursor, cls, module_name)
-            ${5:new_column}_exists = handler.column_exist('$5')}
+            super().__register__(module_name)
 
-            super(${1:ClassName}, cls).__register__(module_name)
+            if not exist:
+                ${1:Model}_h = ${1:ModelName}.__table_handler__(module_name)
+                if ${1:Model}_h.column_exist('XXX'):
+                    query = ?
+                    cursor.execute(*query)
+                    ${1:Model}_h.drop_column('XXX')
+                else:
+                    cls._migrate_property([], [], [])
+    """
 
-            ${6:# Migration from $3: $4
-            handler = TableHandler(cursor, cls, module_name)
-            if handler.column_exists('${7:old_column}'):
-                if not $5_exists:
-                    table.update(['$5'], [table.$7])
-                handler.drop_column('$7')}
-            ${7}
+  'Tryton: __register__() > 3.8 & < 5.4':
+    'prefix': 'tryton_register_old'
+    'body': """
+        @classmethod
+        def __register__(cls, module_name):
+            pool = Pool()
+            ${1:ModelName} = pool.get(${1:Model})
+            TableHandler = backend.get('TableHandler')
+            cursor = Transaction().connection.cursor()
+            exist = TableHandler.table_exist(cls._table)
+            table = cls.__table__()
+            ${1:Model} = ${1:ModelName}.__table__()
 
+            super(${1:ModelName}, cls).__register__(module_name)
+
+            if not exist:
+                ${1:Model}_h = ${1:ModelName}.__table_handler__(module_name)
+                if party_h.column_exist('XXX'):
+                    query = ?
+                    cursor.execute(*query)
+                    ${1:Model}_h.drop_column('XXX')
+                else:
+                    cls._migrate_property([], [], [])
     """
 
   'Tryton: default_fieldname() function':
@@ -741,6 +767,38 @@
         cls._error_messages.update({
                 ${1}
                 })
+    """
+
+  'Tryton: Update create and write method':
+    'prefix': 'tryton_update_create_write'
+    'body': """
+        @classmethod
+        def create(cls, vlist):
+            vlist = [x.copy() for x in vlist]
+            for vals in vlist:
+                vals.update(cls.update_$1(vals))
+            return super().create(vlist)
+
+        @classmethod
+        def write(cls, *args):
+            actions = iter(args)
+            args = []
+            for lines, values in zip(actions, actions):
+                for line in lines:
+                    args.append([line])
+                    args.append(cls.update_$1(values, line))
+            super().write(*args)
+
+        @classmethod
+        def update_$1(cls, values, record=None):
+            values = values.copy()
+            if record:
+                for field in ('XXX', 'YYY'):
+                    if not field in values:
+                        values[field] = getattr(record, field)
+
+            values['ZZZZ'] = '?'
+            return values
     """
 
 # misc
