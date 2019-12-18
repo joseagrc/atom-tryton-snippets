@@ -76,6 +76,7 @@
         # tryton_round_decimals: Tryton: Round decimals (quantize)
         # tryton_dict: Tryton: Dict
         # tryton_sql_execute: SQL execute
+        # tryton_today: Today
     """
 
 # calls
@@ -826,4 +827,14 @@
         cursor.execute(query)
         # record, = cursor.fetchone()
         # for record in cursor.fetchall():
+    """
+
+  'Tryton: Today':
+    'prefix': 'tryton_today'
+    'body': """
+        import datetime
+        today = datetime.date.today()
+
+        Date = pool.get('ir.date')
+        today = Date.today()
     """
